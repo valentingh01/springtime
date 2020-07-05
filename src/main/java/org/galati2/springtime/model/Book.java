@@ -2,14 +2,15 @@ package org.galati2.springtime.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "books")
 public class Book {
 
     @Id
     private int book_id;
-    private String name;
-    private String address;
+    private String title;
 
     public int getId() {
         return book_id;
@@ -20,21 +21,12 @@ public class Book {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public Book setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Book setAddress(String address) {
-        this.address = address;
+    public Book setTitle(String name) {
+        this.title = name;
         return this;
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface ClientRepository extends CrudRepository<Book, Integer> {
-    Iterable<Book> findByNameContaining(String name);
+    Iterable<Book> findByTitleContaining(String title);
 }

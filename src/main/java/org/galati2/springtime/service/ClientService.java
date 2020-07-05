@@ -5,6 +5,8 @@ import org.galati2.springtime.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
+
 @Component
 public class ClientService {
 //
@@ -12,7 +14,7 @@ public class ClientService {
 //    private ClientRepository clientRepository;
 
     public void testClientservice(String clientName) {
-        System.out.println("x");
+        System.out.println(clientName);
 //        Iterable<Book> clients = clientRepository.findAll();
 //        Iterable<Book> clientsByName = clientRepository.findByNameContaining("Numele");
 //        System.out.println("Testing client service with " + clientName);
