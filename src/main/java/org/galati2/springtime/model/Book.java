@@ -11,6 +11,7 @@ public class Book {
     @Id
     private int book_id;
     private String title;
+    private String subtitle;
 
     public int getId() {
         return book_id;
