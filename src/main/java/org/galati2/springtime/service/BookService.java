@@ -26,4 +26,22 @@ public class BookService {
 //
         return results;
     }
+
+    public List<Book> getBooks(String title) {
+        List<Book> results = new ArrayList<>();
+        Iterable<Book> books = repository.findByTitleContaining(title);
+        books.forEach(results::add);
+        return results;
+    }
+
+    public List<Book> getBooks(String title, String subtitle) {
+        List<Book> results = new ArrayList<>();
+        Iterable<Book> books = repository.findByTitleContainingAndSubtitleContaining(title, subtitle);
+        books.forEach(results::add);
+        return results;
+    }
+
+    public Book getBook(int id) {
+        return repository.findById(id).orElse(null);
+    }
 }

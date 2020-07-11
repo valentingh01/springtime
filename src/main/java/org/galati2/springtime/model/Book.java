@@ -13,6 +13,24 @@ public class Book {
     private String title;
     private String subtitle;
 
+    public int getBook_id() {
+        return book_id;
+    }
+
+    public Book setBook_id(int book_id) {
+        this.book_id = book_id;
+        return this;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public Book setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+        return this;
+    }
+
     public int getId() {
         return book_id;
     }
