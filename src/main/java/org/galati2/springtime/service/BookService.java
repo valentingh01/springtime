@@ -5,17 +5,25 @@ import org.galati2.springtime.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class BookService {
 
     @Autowired
     private BookRepository repository;
 
-    public void testBookservice() {
+    public List<Book> getBooks() {
+        List<Book> results = new ArrayList<>();
         Iterable<Book> books = repository.findAll();
-        for (Book b :
-                books) {
-            System.out.println(b.getTitle());
-        }
+
+        books.forEach(results::add);
+//
+//        for (Book book : books) {
+//            results.add(book);
+//        }
+//
+        return results;
     }
 }
