@@ -55,7 +55,13 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
+//        if (book.getBook_id() > 0 && !repository.existsById(book.getBook_id())){
+//            return null;
+//        }
         return repository.save(book);
     }
 
+    public void deleteBook(int id) {
+        repository.deleteById(id);
+    }
 }

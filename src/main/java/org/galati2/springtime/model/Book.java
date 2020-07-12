@@ -1,14 +1,13 @@
 package org.galati2.springtime.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
 public class Book {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int book_id;
     private String title;
     private String subtitle;

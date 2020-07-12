@@ -5,29 +5,51 @@ import org.galati2.springtime.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
     @GetMapping("/books")
-    public List<Book> getBooks(
+    public String getBooks(
             @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "subtitle", required = false) String subtitle
+            @RequestParam(name = "subtitle", required = false) String subtitle,
+            Model userInterfaceModel // ViewModel
     ) {
         List<Book> books = bookService.getBooks(title, subtitle);
-        return books;
+        userInterfaceModel.addAttribute("books", books);
+        return "booksList";
+    }
+
+    @GetMapping("/books/{id}")
+    public ResponseEntity<Book> getBook(@PathVariable int id) {
+        Book result = bookService.getBook(id);
+        if (result == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/books/{id}")
-    public Book changeBook(@PathVariable int id, @RequestBody Book book) {
+    public ResponseEntity<Book> changeBook(@PathVariable int id, @RequestBody Book book) {
         book.setBook_id(id);
-        return bookService.saveBook(book);
+        Book result = bookService.saveBook(book);
+        if (result == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    @DeleteMapping("/books/{id}")
+    public ResponseEntity<Book> deleteBook(@PathVariable int id) {
+        bookService.deleteBook(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/books")
@@ -40,17 +62,4 @@ public class BookController {
         List<Book> books = bookService.getBooks();
         return books;
     }
-
-    @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable int id) {
-        Book result = bookService.getBook(id);
-//        return result == null
-//                ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-//                : new ResponseEntity<>(result, HttpStatus.OK);
-        if (result == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
 }
