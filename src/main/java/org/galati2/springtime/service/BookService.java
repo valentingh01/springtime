@@ -36,7 +36,16 @@ public class BookService {
 
     public List<Book> getBooks(String title, String subtitle) {
         List<Book> results = new ArrayList<>();
-        Iterable<Book> books = repository.findByTitleContainingAndSubtitleContaining(title, subtitle);
+        Iterable<Book> books;
+        if (title == null && subtitle == null){
+            books = repository.findAll();
+        } else if (title == null) {
+            books = repository.findBySubtitleContaining(subtitle);
+        } else if (subtitle == null) {
+            books = repository.findByTitleContaining(title);
+        } else {
+            books = repository.findByTitleContainingAndSubtitleContaining(title, subtitle);
+        }
         books.forEach(results::add);
         return results;
     }
@@ -44,4 +53,9 @@ public class BookService {
     public Book getBook(int id) {
         return repository.findById(id).orElse(null);
     }
+
+    public Book saveBook(Book book) {
+        return repository.save(book);
+    }
+
 }

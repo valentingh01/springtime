@@ -13,6 +13,6 @@ public class SpringTimeCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        controller.getBooks();
+//        controller.getBooks();
     }
 }

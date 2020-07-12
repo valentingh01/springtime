@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -23,6 +22,17 @@ public class BookController {
     ) {
         List<Book> books = bookService.getBooks(title, subtitle);
         return books;
+    }
+
+    @PutMapping("/books/{id}")
+    public Book changeBook(@PathVariable int id, @RequestBody Book book) {
+        book.setBook_id(id);
+        return bookService.saveBook(book);
+    }
+
+    @PostMapping("/books")
+    public Book addBook(@RequestBody Book book) {
+        return bookService.saveBook(book);
     }
 
     @GetMapping("/books/title/{title}/subtitle/{subtitle}")

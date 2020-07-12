@@ -21,5 +21,4 @@ public class BeansConfig {
         dataSourceBuilder.password("aemilianvs");
         return dataSourceBuilder.build();
     }
-
 }
