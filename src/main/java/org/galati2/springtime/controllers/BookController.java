@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -26,6 +28,11 @@ public class BookController {
         List<Book> books = bookService.getBooks(title, subtitle);
         userInterfaceModel.addAttribute("books", books);
         return "booksList";
+    }
+
+    @GetMapping("/books/add")
+    public String addBook() {
+        return "addBook";
     }
 
     @GetMapping("/books/{id}")
@@ -53,7 +60,7 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public Book addBook(@RequestBody Book book) {
+    public Book addBook(@Valid Book book, BindingResult result, Model model) {
         return bookService.saveBook(book);
     }
 
