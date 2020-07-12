@@ -8,43 +8,31 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int book_id;
+    private Long book_id;
     private String title;
     private String subtitle;
 
-    public int getBook_id() {
+    public Long getBook_id() {
         return book_id;
     }
 
-    public Book setBook_id(int book_id) {
+    public void setBook_id(Long book_id) {
         this.book_id = book_id;
-        return this;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public Book setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-        return this;
-    }
-
-    public int getId() {
-        return book_id;
-    }
-
-    public Book setId(int id) {
-        this.book_id = id;
-        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public Book setTitle(String name) {
-        this.title = name;
-        return this;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 }

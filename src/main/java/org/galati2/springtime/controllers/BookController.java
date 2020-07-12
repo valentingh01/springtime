@@ -31,42 +31,40 @@ public class BookController {
     }
 
     @GetMapping("/books/add")
-    public String addBook() {
+    public String addBook(Model model) {
+        model.addAttribute("book", new Book());
         return "addBook";
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable int id) {
+    public String getBook(@PathVariable Long id, Model model) {
         Book result = bookService.getBook(id);
         if (result == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            model.addAttribute("books", bookService.getBooks());
+            return "booksList";
         }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        model.addAttribute("book", result);
+        return "addBook";
     }
 
-    @PutMapping("/books/{id}")
-    public ResponseEntity<Book> changeBook(@PathVariable int id, @RequestBody Book book) {
+    @PostMapping("/books/{id}")
+    public String changeBook(@PathVariable Long id, @ModelAttribute("book") Book book, Model model) {
         book.setBook_id(id);
-        Book result = bookService.saveBook(book);
-        if (result == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        bookService.saveBook(book);
+        model.addAttribute("books", bookService.getBooks());
+        return "booksList";
     }
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<Book> deleteBook(@PathVariable int id) {
+    public String deleteBook(@PathVariable Long id, Model model) {
         bookService.deleteBook(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        model.addAttribute("books", bookService.getBooks());
+        return "booksList";
     }
 
     @PostMapping("/books")
-    public Book addBook(@Valid Book book, BindingResult result, Model model) {
-        return bookService.saveBook(book);
-    }
-
-    @GetMapping("/books/title/{title}/subtitle/{subtitle}")
-    public List<Book> getBooksByPath(@PathVariable String title, @PathVariable String subtitle) {
-        List<Book> books = bookService.getBooks();
-        return books;
+    public String addBook(@ModelAttribute("book") Book book, Model model) {
+        bookService.saveBook(book);
+        model.addAttribute("books", bookService.getBooks());
+        return "booksList";
     }
 }

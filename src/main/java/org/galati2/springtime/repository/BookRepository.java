@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface BookRepository extends CrudRepository<Book, Integer> {
+public interface BookRepository extends CrudRepository<Book, Long> {
     Iterable<Book> findByTitleContaining(String title);
     Iterable<Book> findBySubtitleContaining(String subtitle);
     Iterable<Book> findByTitleContainingAndSubtitleContaining(String title, String subtitle);
