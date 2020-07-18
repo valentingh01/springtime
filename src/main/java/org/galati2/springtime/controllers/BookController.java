@@ -10,41 +10,36 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
     @GetMapping("/books")
-    public String getBooks(
+    public List<Book> getBooks(
             @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "subtitle", required = false) String subtitle,
-            Model userInterfaceModel // ViewModel
+            @RequestParam(name = "subtitle", required = false) String subtitle
     ) {
         List<Book> books = bookService.getBooks(title, subtitle);
-        userInterfaceModel.addAttribute("books", books);
-        return "booksList";
+        return books;
     }
-
-    @GetMapping("/books/add")
-    public String addBook(Model model) {
-        model.addAttribute("book", new Book());
-        return "addBook";
-    }
+//
+//    @GetMapping("/books/add")
+//    public String addBook(Model model) {
+//        model.addAttribute("book", new Book());
+//        return "addBook";
+//    }
 
     @GetMapping("/books/{id}")
-    public String getBook(@PathVariable Long id, Model model) {
+    public ResponseEntity<Book> getBook(@PathVariable Long id) {
         Book result = bookService.getBook(id);
         if (result == null) {
-            model.addAttribute("books", bookService.getBooks());
-            return "booksList";
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        model.addAttribute("book", result);
-        return "addBook";
+        return new ResponseEntity<Book>(result, HttpStatus.OK);
     }
 
     @PostMapping("/books/{id}")
